@@ -33,7 +33,7 @@ public class SwaggerConfig {
 
         ApiInfo apiInfo = new ApiInfo(
                 "sisEnade API REST",
-                "API REST do Sistema Enade.",
+                "API REST do Sistema do Enade.",
                 "1.0",
                 "Terms of Service",
                 new Contact("Kauan Victor", "","k1one.g.vitor@gmail.com"),
