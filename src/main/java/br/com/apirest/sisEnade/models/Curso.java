@@ -1,10 +1,10 @@
-package br.com.apirest.sisEnade.model;
+package br.com.apirest.sisEnade.models;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "disciplinas")
-public class Disciplina {
+@Table(name = "cursos")
+public class Curso {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,10 +14,6 @@ public class Disciplina {
 
     @Column(nullable = false, length = 200)
     private String nome;
-
-    @ManyToOne
-    private Curso curso;
-
 
     public long getId() {
         return id;
@@ -33,13 +29,5 @@ public class Disciplina {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
     }
 }

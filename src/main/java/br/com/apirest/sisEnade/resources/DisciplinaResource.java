@@ -1,6 +1,6 @@
 package br.com.apirest.sisEnade.resources;
 
-import br.com.apirest.sisEnade.model.Disciplina;
+import br.com.apirest.sisEnade.models.Disciplina;
 import br.com.apirest.sisEnade.repository.DisciplinaRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

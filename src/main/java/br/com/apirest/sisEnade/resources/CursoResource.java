@@ -1,5 +1,5 @@
 package br.com.apirest.sisEnade.resources;
-import br.com.apirest.sisEnade.model.Curso;
+import br.com.apirest.sisEnade.models.Curso;
 import br.com.apirest.sisEnade.repository.CursoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

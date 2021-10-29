@@ -1,4 +1,6 @@
-package br.com.apirest.sisEnade.model;
+package br.com.apirest.sisEnade.models;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,7 +18,7 @@ public class Anotacao {
     @Column(nullable = false, length = 4000)
     private String descricao;
 
-
+    @DateTimeFormat(pattern = "DD/MM/YYYY")
     private LocalDateTime dataCricao;
 
     @ManyToOne

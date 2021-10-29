@@ -1,4 +1,4 @@
-package br.com.apirest.sisEnade.model;
+package br.com.apirest.sisEnade.models;
 
 import javax.persistence.*;
 
