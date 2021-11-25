@@ -15,7 +15,7 @@ public class Anotacao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(nullable = false, length = 4000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String descricao;
 
     @DateTimeFormat(pattern = "DD/MM/YYYY")

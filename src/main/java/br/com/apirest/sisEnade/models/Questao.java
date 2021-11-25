@@ -21,7 +21,7 @@ public class Questao {
     @Column(nullable = false, length = 50)
     private String edicao;
 
-    @Column(nullable = false, length = 4000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String enunciado;
 
     @Column(nullable = false, length = 100)

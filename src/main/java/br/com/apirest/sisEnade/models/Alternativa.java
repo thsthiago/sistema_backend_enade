@@ -15,7 +15,7 @@ public class Alternativa {
     @Column(nullable = false, length = 10)
     private String letra;
 
-    @Column(nullable = false, length = 4000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String enunciado;
 
     @ManyToOne
