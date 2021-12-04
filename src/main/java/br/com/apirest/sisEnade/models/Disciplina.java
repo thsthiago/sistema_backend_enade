@@ -18,6 +18,9 @@ public class Disciplina {
     @ManyToOne
     private Curso curso;
 
+    @ManyToMany
+    private Questao questao;
+
 
     public long getId() {
         return id;
@@ -41,5 +44,13 @@ public class Disciplina {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public Questao getQuestao() {
+        return questao;
+    }
+
+    public void setQuestao(Questao questao) {
+        this.questao = questao;
     }
 }

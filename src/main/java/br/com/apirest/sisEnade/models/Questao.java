@@ -27,13 +27,14 @@ public class Questao {
     @Column(nullable = false, length = 100)
     private String resposta;
 
+    @Column(nullable = false, columnDefinition = "JSON" )
+    private String alternativas;
 
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    @ManyToOne
-    @JoinColumn(name = "disciplina_id")
+    @ManyToMany
     private Disciplina disciplina;
 
     public long getId() {
@@ -82,6 +83,14 @@ public class Questao {
 
     public void setResposta(String resposta) {
         this.resposta = resposta;
+    }
+
+    public String getAlternativas() {
+        return alternativas;
+    }
+
+    public void setAlternativas(String alternativas) {
+        this.alternativas = alternativas;
     }
 
     public Curso getCurso() {

@@ -33,6 +33,7 @@ public class DisciplinaResource {
     @PostMapping("/disciplina")
     @ApiOperation(value = "Salva uma disciplina")
     public Disciplina salvarDisciplina(@RequestBody Disciplina disciplina){
+        System.out.print(disciplina);
         return disciplinaRepository.save(disciplina);
     }
 
