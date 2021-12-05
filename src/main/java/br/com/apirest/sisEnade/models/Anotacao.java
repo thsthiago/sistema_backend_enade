@@ -1,60 +1,19 @@
 package br.com.apirest.sisEnade.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Embeddable;
 
-@Entity
-@Table(name = "anotacoes")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Embeddable
 public class Anotacao {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column(nullable = false, length = 4000)
-    private String descricao;
-
-    @DateTimeFormat(pattern = "DD/MM/YYYY")
-    private LocalDateTime dataCricao;
-
-    @ManyToOne
-    @JoinColumn(name = "questao_id")
-    private Questao questao;
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public LocalDateTime getDataCricao() {
-        return dataCricao;
-    }
-
-    public void setDataCricao(LocalDateTime dataCricao) {
-        this.dataCricao = dataCricao;
-    }
-
-    public Questao getQuestao() {
-        return questao;
-    }
-
-    public void setQuestao(Questao questao) {
-        this.questao = questao;
-    }
+  private String anotacao;
+  private String createdAt;
 }
+

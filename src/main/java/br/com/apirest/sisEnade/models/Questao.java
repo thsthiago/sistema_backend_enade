@@ -1,16 +1,30 @@
 package br.com.apirest.sisEnade.models;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "questoes")
 public class Questao {
-
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Integer id;
 
     @Column(nullable = false, length = 100)
     private String tipoQuestao;
@@ -19,84 +33,40 @@ public class Questao {
     private int numQuestao;
 
     @Column(nullable = false, length = 50)
-    private String edicao;
+    private int edicao;
 
-    @Column(nullable = false, length = 4000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String enunciado;
 
     @Column(nullable = false, length = 100)
     private String resposta;
 
-
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "alternativas", joinColumns = @JoinColumn(name = "questao_id"))
+    @AttributeOverrides({
+        @AttributeOverride(name = "letra", column = @Column(name = "letra")),
+        @AttributeOverride(name = "enunciado", column = @Column(name = "enunciado"))
+    })
+    private Set<Alternativa> alternativas = new HashSet<>();
+    
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    @ManyToOne
-    @JoinColumn(name = "disciplina_id")
-    private Disciplina disciplina;
+    @ManyToMany
+    private List<Disciplina> disciplina;
 
-    public long getId() {
-        return id;
-    }
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "anotacoes", joinColumns = @JoinColumn(name = "questao_id"))
+    @AttributeOverrides({
+        @AttributeOverride(name = "anotacao", column = @Column(name = "anotacao")),
+        @AttributeOverride(name = "createdAt", column = @Column(name = "createdAt"))
+    })
+    private Set<Anotacao> anotacoes  = new HashSet<>();
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    @CreationTimestamp()
+    private LocalDateTime createdAt;
 
-    public String getTipoQuestao() {
-        return tipoQuestao;
-    }
-
-    public void setTipoQuestao(String tipoQuestao) {
-        this.tipoQuestao = tipoQuestao;
-    }
-
-    public int getNumQuestao() {
-        return numQuestao;
-    }
-
-    public void setNumQuestao(int numQuestao) {
-        this.numQuestao = numQuestao;
-    }
-
-    public String getEdicao() {
-        return edicao;
-    }
-
-    public void setEdicao(String edicao) {
-        this.edicao = edicao;
-    }
-
-    public String getEnunciado() {
-        return enunciado;
-    }
-
-    public void setEnunciado(String enunciado) {
-        this.enunciado = enunciado;
-    }
-
-    public String getResposta() {
-        return resposta;
-    }
-
-    public void setResposta(String resposta) {
-        this.resposta = resposta;
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
-
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
-
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
-    }
+    @UpdateTimestamp()
+    private LocalDateTime updatedAt;
 }

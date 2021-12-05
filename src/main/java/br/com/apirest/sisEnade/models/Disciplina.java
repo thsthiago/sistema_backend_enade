@@ -1,45 +1,38 @@
 package br.com.apirest.sisEnade.models;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "disciplinas")
 public class Disciplina {
-
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Integer id;
 
     @Column(nullable = false, length = 200)
     private String nome;
 
     @ManyToOne
+    @JoinColumn(name="curso_id", nullable = false)
     private Curso curso;
 
+    @CreationTimestamp()
+    private LocalDateTime createdAt;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
+    @UpdateTimestamp()
+    private LocalDateTime updatedAt;
 }
