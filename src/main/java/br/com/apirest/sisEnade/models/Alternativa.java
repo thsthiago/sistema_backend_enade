@@ -12,8 +12,8 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class Anotacao {
-  private String anotacao;
-  private String createdAt;
+public class Alternativa {
+  private String enunciado;
+  private String letra;
 }
 
