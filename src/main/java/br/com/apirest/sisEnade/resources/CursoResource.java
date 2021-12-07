@@ -81,9 +81,9 @@ public class CursoResource {
     }
 
     @Transactional
-    @DeleteMapping("/curso")
+    @DeleteMapping("/curso/{id}")
     @ApiOperation(value = "Deleta um curso")
-    public void deletaCurso(@RequestBody Integer id){
+    public void deletaCurso(@PathVariable(value = "id") Integer id){
         cursoService.delete(id);
     }
 

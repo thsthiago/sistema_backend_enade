@@ -70,9 +70,9 @@ public class DisciplinaResource {
     }
 
     @Transactional
-    @DeleteMapping("/disciplina")
+    @DeleteMapping("/disciplina/{id}")
     @ApiOperation(value = "Delata uma disciplina")
-    public void deletaDisciplina(@RequestBody Integer id){
+    public void deletaDisciplina(@PathVariable(value = "id") Integer id){
         disciplinaService.delete(id);
     }
 

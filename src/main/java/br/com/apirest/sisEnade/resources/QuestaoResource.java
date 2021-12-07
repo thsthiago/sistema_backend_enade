@@ -70,9 +70,9 @@ public class QuestaoResource {
     }
 
     @Transactional
-    @DeleteMapping("/questao")
+    @DeleteMapping("/questao/{id}")
     @ApiOperation(value = "Delata uma Questao")
-    public void deletarQuestao(@RequestBody Integer id){
+    public void deletarQuestao(@PathVariable(value = "id") Integer id){
         questaoService.delete(id);
     }
 
