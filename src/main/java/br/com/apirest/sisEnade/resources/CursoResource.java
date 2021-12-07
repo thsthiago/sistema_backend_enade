@@ -1,5 +1,4 @@
 package br.com.apirest.sisEnade.resources;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -8,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +50,7 @@ public class CursoResource {
     @GetMapping("/cursos")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna uma Lista de cursos")
-    public ResponseEntity<List<Curso>> listarCurso(
+    public PagingResponseCurso listarCurso(
         @And({
             @Spec(path = "id", params = "id", spec = Like.class),
             @Spec(path = "nome", params = "nome", spec = Like.class),
@@ -64,7 +62,7 @@ public class CursoResource {
         Sort sort,
         @RequestHeader HttpHeaders headers){
         final PagingResponseCurso response = cursoService.get(spec, headers, sort);
-        return  new ResponseEntity<>(response.getResults(), returnHttpHeaders(response), HttpStatus.OK);
+        return  response;
     }
 
     @Transactional

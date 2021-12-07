@@ -6,7 +6,6 @@ import br.com.apirest.sisEnade.models.utils.PagingResponseQuestao;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import br.com.apirest.sisEnade.services.QuestaoService;
 import io.swagger.annotations.Api;
@@ -14,8 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -42,7 +39,7 @@ public class QuestaoResource {
     @GetMapping("/questoes")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Lista todas as Questoes")
-    public ResponseEntity<List<Questao>> listarQuestao(
+    public PagingResponseQuestao listarQuestao(
         @And({
             @Spec(path = "id", params = "id", spec = Like.class),
             @Spec(path = "nome", params = "nome", spec = Like.class),
@@ -54,7 +51,7 @@ public class QuestaoResource {
         Sort sort,
         @RequestHeader HttpHeaders headers){
         final PagingResponseQuestao response = questaoService.get(spec, headers, sort);
-        return  new ResponseEntity<>(response.getResults(), returnHttpHeaders(response), HttpStatus.OK);
+        return  response;
     }
 
     @Transactional

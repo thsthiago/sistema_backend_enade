@@ -6,18 +6,13 @@ import br.com.apirest.sisEnade.models.utils.PagingResponseDisciplina;
 import org.springframework.http.HttpHeaders;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import br.com.apirest.sisEnade.repository.DisciplinaRepository;
 import br.com.apirest.sisEnade.services.DisciplinaService;
-import br.com.apirest.sisEnade.services.QuestaoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -44,7 +39,7 @@ public class DisciplinaResource {
     @GetMapping("/disciplinas")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Lista todas as disciplinas")
-    public ResponseEntity<List<Disciplina>> listarDisciplinas(
+    public PagingResponseDisciplina listarDisciplinas(
         @And({
             @Spec(path = "nome", params = "nome", spec = Like.class),
             @Spec(path = "curso.id", params = "curso", spec = Equal.class),
@@ -56,7 +51,7 @@ public class DisciplinaResource {
         Sort sort,
         @RequestHeader HttpHeaders headers){
         final PagingResponseDisciplina response = disciplinaService.get(spec, headers, sort);
-        return  new ResponseEntity<>(response.getResults(), returnHttpHeaders(response), HttpStatus.OK);
+        return  response;
     }
 
     @Transactional
