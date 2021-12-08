@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -49,8 +50,7 @@ public class Questao {
     })
     private Set<Alternativa> alternativas = new HashSet<>();
     
-    @ManyToOne
-    @JoinColumn(name = "curso_id")
+    @ManyToOne()
     private Curso curso;
 
     @ManyToMany
@@ -59,7 +59,7 @@ public class Questao {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "anotacoes", joinColumns = @JoinColumn(name = "questao_id"))
     @AttributeOverrides({
-        @AttributeOverride(name = "anotacao", column = @Column(name = "anotacao")),
+        @AttributeOverride(name = "anotacao", column = @Column(name = "anotacao", length = 1500)),
         @AttributeOverride(name = "createdAt", column = @Column(name = "createdAt"))
     })
     private Set<Anotacao> anotacoes  = new HashSet<>();
