@@ -39,7 +39,7 @@ public class Questao {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String enunciado;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 10000)
     private String resposta;
 
     @ElementCollection(fetch = FetchType.LAZY)
@@ -51,6 +51,7 @@ public class Questao {
     private Set<Alternativa> alternativas = new HashSet<>();
     
     @ManyToOne()
+    @JoinColumn(name = "curso_id")
     private Curso curso;
 
     @ManyToMany

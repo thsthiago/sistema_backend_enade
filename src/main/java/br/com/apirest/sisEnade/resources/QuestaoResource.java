@@ -3,8 +3,7 @@ package br.com.apirest.sisEnade.resources;
 import br.com.apirest.sisEnade.models.Questao;
 import br.com.apirest.sisEnade.models.utils.PagingHeaders;
 import br.com.apirest.sisEnade.models.utils.PagingResponseQuestao;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Join;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.*;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -21,8 +21,6 @@ import javax.transaction.Transactional;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.In;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -38,27 +36,26 @@ public class QuestaoResource {
     }
 
     @Transactional
-    @GetMapping("/questoes")
+    @GetMapping(value = "/questoes", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Lista todas as Questoes")
     public PagingResponseQuestao listarQuestao(
-        @Join(path = "disciplina", alias = "disci")
-        @Or({
-            @Spec(path = "curso.nome", params = "curso", spec = Like.class),
-            @Spec(path = "curso.id", params = "teste", spec = Like.class),
-            @Spec(path = "disci.nome", params = "search", spec = Like.class),
-            @Spec(path = "disci.id", params = "disciplina", spec = Like.class),
-            @Spec(path = "id", params = "id", spec = Like.class),
-            @Spec(path = "edicao", params = "edicao", spec = Like.class),
-            @Spec(path = "numQuestao", params = "numeroQuestao", spec = Like.class),
-            @Spec(path = "tipoQuestao", params = "tipoQuestao", spec = Like.class),
-            @Spec(path = "createdAt", params = "createdAt", spec = In.class),
-            @Spec(path = "updatedAt", params = "updatedAt", spec = Like.class),
-            @Spec(path = "createdAt", params = {"createdAtGt", "createdAtLt"}, spec = Equal.class),
-            @Spec(path = "updatedAt", params = {"updatedAtGt", "updatedAtLt"}, spec = Equal.class)
-        }) Specification<Questao> spec,
-        Sort sort,
-        @RequestHeader HttpHeaders headers){
+            @Join(path = "disciplina", alias = "disci")
+            @Disjunction(value = {
+                @And({
+                    @Spec(path = "disci.nome", params = "search", spec = Like.class),
+                    @Spec(path = "curso.id", params = "teste", spec = In.class),
+                    @Spec(path = "id", params = "id", spec = In.class),
+                    @Spec(path = "edicao", params = "edicao", spec = Equal.class),
+                    @Spec(path = "numQuestao", params = "numeroQuestao", spec = Equal.class),
+                    @Spec(path = "tipoQuestao", params = "tipoQuestao", spec = Like.class),
+                    @Spec(path = "createdAt", params = "createdAt", spec = In.class),
+                    @Spec(path = "updatedAt", params = "updatedAt", spec = Like.class),
+                    @Spec(path = "createdAt", params = {"createdAtGt", "createdAtLt"}, spec = Equal.class),
+                    @Spec(path = "updatedAt", params = {"updatedAtGt", "updatedAtLt"}, spec = Equal.class),
+                    @Spec(path = "disci.id", params = "disciplina", spec = In.class)
+                })
+            }) Specification<Questao> spec, Sort sort, @RequestHeader HttpHeaders headers){
         final PagingResponseQuestao response = questaoService.get(spec, headers, sort);
         return  response;
     }
