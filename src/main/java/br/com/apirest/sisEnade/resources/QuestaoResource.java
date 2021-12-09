@@ -3,6 +3,8 @@ package br.com.apirest.sisEnade.resources;
 import br.com.apirest.sisEnade.models.Questao;
 import br.com.apirest.sisEnade.models.utils.PagingHeaders;
 import br.com.apirest.sisEnade.models.utils.PagingResponseQuestao;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Join;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,9 +42,16 @@ public class QuestaoResource {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Lista todas as Questoes")
     public PagingResponseQuestao listarQuestao(
-        @And({
+        @Join(path = "disciplina", alias = "disci")
+        @Or({
+            @Spec(path = "curso.nome", params = "curso", spec = Like.class),
+            @Spec(path = "curso.id", params = "teste", spec = Like.class),
+            @Spec(path = "disci.nome", params = "search", spec = Like.class),
+            @Spec(path = "disci.id", params = "disciplina", spec = Like.class),
             @Spec(path = "id", params = "id", spec = Like.class),
-            @Spec(path = "nome", params = "nome", spec = Like.class),
+            @Spec(path = "edicao", params = "edicao", spec = Like.class),
+            @Spec(path = "numQuestao", params = "numeroQuestao", spec = Like.class),
+            @Spec(path = "tipoQuestao", params = "tipoQuestao", spec = Like.class),
             @Spec(path = "createdAt", params = "createdAt", spec = In.class),
             @Spec(path = "updatedAt", params = "updatedAt", spec = Like.class),
             @Spec(path = "createdAt", params = {"createdAtGt", "createdAtLt"}, spec = Equal.class),
